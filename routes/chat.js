@@ -5,6 +5,7 @@ const {
   getMessages,
   reactToMessage,
   votePoll,
+sendMessageWithUpload, 
 } = require("../controllers/chatController");
 
 /**
