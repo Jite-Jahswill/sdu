@@ -33,13 +33,22 @@ const { authenticateToken } = require("../middleware/authMiddleware");
  *           schema:
  *             type: object
  *             required:
- *               - name
+ *               - firstname
+ *               - lastname
+ *               - username
  *               - email
  *               - password
+ *               - matricNumber
  *             properties:
- *               name:
+ *               firstname:
  *                 type: string
- *                 example: Jite Jahswill
+ *                 example: Jite
+ *               lastname:
+ *                 type: string
+ *                 example: Jahswill
+ *               username:
+ *                 type: string
+ *                 example: jitejahswill
  *               email:
  *                 type: string
  *                 example: jite@example.com
@@ -62,7 +71,7 @@ const { authenticateToken } = require("../middleware/authMiddleware");
  *       201:
  *         description: User registered successfully
  *       400:
- *         description: Bad request (e.g., email already exists)
+ *         description: Bad request (e.g., email or username already exists)
  */
 
 /**
@@ -124,9 +133,15 @@ const { authenticateToken } = require("../middleware/authMiddleware");
  *           schema:
  *             type: object
  *             properties:
- *               name:
+ *               firstname:
  *                 type: string
- *                 example: New Name
+ *                 example: NewFirstName
+ *               lastname:
+ *                 type: string
+ *                 example: NewLastName
+ *               username:
+ *                 type: string
+ *                 example: newusername
  *               email:
  *                 type: string
  *                 example: newemail@example.com
@@ -168,6 +183,7 @@ const { authenticateToken } = require("../middleware/authMiddleware");
  *       403:
  *         description: Unauthorized
  */
+
 
 // Routes
 router.post("/register", upload.single("profilePicture"), register);
