@@ -134,11 +134,10 @@ const { authenticateToken } = require("../middleware/authMiddleware");
  *       403:
  *         description: Unauthorized
  */
-
-router.delete("/delete", authenticateToken, deleteUser);
-router.put("/update", authenticateToken, updateUser);
 router.post("/register", register);
 router.post("/login", login);
 router.get("/me", authenticateToken, getMe);
+router.put("/update", authenticateToken, updateUser);
+router.delete("/delete", authenticateToken, deleteUser);
 
 module.exports = router;
