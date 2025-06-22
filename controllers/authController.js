@@ -4,7 +4,7 @@ const User = require("../models/User");
 
 exports.register = async (req, res) => {
   try {
-    const { name, email, password, matricNumber, state, country } = req.body;
+    const { firstname, lastname, username, email, password, matricNumber, state, country } = req.body;
 
     // Handle profile picture upload
     let profilePicture = null;
@@ -12,14 +12,22 @@ exports.register = async (req, res) => {
       profilePicture = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
     }
 
-    // Check if user already exists
-    const existing = await User.findOne({ where: { email } });
-    if (existing) return res.status(400).json({ message: "Email already in use" });
+    // Check if email or username or matricNumber already exists
+    const existingEmail = await User.findOne({ where: { email } });
+    if (existingEmail) return res.status(400).json({ message: "Email already in use" });
+
+    const existingUsername = await User.findOne({ where: { username } });
+    if (existingUsername) return res.status(400).json({ message: "Username already in use" });
+
+    const existingMatric = await User.findOne({ where: { matricNumber } });
+    if (existingMatric) return res.status(400).json({ message: "Matric number already in use" });
 
     const hashed = await bcrypt.hash(password, 10);
 
     const newUser = await User.create({
-      name,
+      firstname,
+      lastname,
+      username,
       email,
       password: hashed,
       matricNumber,
@@ -73,20 +81,23 @@ exports.updateUser = async (req, res) => {
     const user = await User.findByPk(req.user.id);
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    const { name, email, password, matricNumber } = req.body;
+    const { firstname, lastname, username, email, password, matricNumber, state, country } = req.body;
 
-    if (name) user.name = name;
+    if (firstname) user.firstname = firstname;
+    if (lastname) user.lastname = lastname;
+    if (username) user.username = username;
     if (email) user.email = email;
     if (matricNumber) user.matricNumber = matricNumber;
+    if (state) user.state = state;
+    if (country) user.country = country;
 
     if (password) {
       const salt = await bcrypt.genSalt(10);
       user.password = await bcrypt.hash(password, salt);
     }
 
-    // Profile Picture Upload
     if (req.file) {
-      user.profilePicture = `/uploads/${req.file.filename}`;
+      user.profilePicture = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
     }
 
     await user.save();
@@ -96,6 +107,7 @@ exports.updateUser = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
+
 
 // Delete user
 exports.deleteUser = async (req, res) => {
