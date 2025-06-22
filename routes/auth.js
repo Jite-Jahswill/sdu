@@ -86,6 +86,57 @@ const { authenticateToken } = require("../middleware/authMiddleware");
  *       403:
  *         description: Unauthorized
  */
+
+/**
+ * @swagger
+ * /api/auth/update:
+ *   put:
+ *     summary: Update current user info
+ *     tags: [Auth]
+ *     security:
+ *       - bearerAuth: []
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             properties:
+ *               name:
+ *                 type: string
+ *                 example: New Name
+ *               email:
+ *                 type: string
+ *                 example: newemail@example.com
+ *               password:
+ *                 type: string
+ *                 example: newPassword123
+ *     responses:
+ *       200:
+ *         description: User updated successfully
+ *       400:
+ *         description: Invalid input
+ *       403:
+ *         description: Unauthorized
+ */
+
+/**
+ * @swagger
+ * /api/auth/delete:
+ *   delete:
+ *     summary: Delete current user account
+ *     tags: [Auth]
+ *     security:
+ *       - bearerAuth: []
+ *     responses:
+ *       200:
+ *         description: User deleted successfully
+ *       403:
+ *         description: Unauthorized
+ */
+
+router.delete("/delete", authenticateToken, deleteUser);
+router.put("/update", authenticateToken, updateUser);
 router.post("/register", register);
 router.post("/login", login);
 router.get("/me", authenticateToken, getMe);
