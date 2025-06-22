@@ -82,5 +82,5 @@ const deleteUser = async (req, res) => {
   }
 };
 
-module.exports = { register, login, getMe, updateUser, deleteUser };
+module.exports = { updateUser, deleteUser };
 
