@@ -4,16 +4,21 @@ const Post = require("../models/Post");
 exports.createPost = async (req, res) => {
   try {
     const { title, body } = req.body;
+    const image = req.file ? `/uploads/${req.file.filename}` : null;
+
     const post = await Post.create({
       title,
       body,
+      image,
       userId: req.user.id,
     });
+
     res.status(201).json(post);
   } catch (err) {
     res.status(500).json({ message: "Error creating post", error: err.message });
   }
 };
+
 
 // Get all posts
 exports.getAllPosts = async (req, res) => {
