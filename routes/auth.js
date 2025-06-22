@@ -1,5 +1,7 @@
 const express = require("express");
 const router = express.Router();
+const multer = require("multer");
+const upload = multer({ dest: "uploads/" });
 const {
   register,
   login,
@@ -140,7 +142,7 @@ const { authenticateToken } = require("../middleware/authMiddleware");
  *       403:
  *         description: Unauthorized
  */
-router.post("/register", register);
+router.post("/register", upload.single("profilePicture"), register);
 router.post("/login", login);
 router.get("/me", authenticateToken, getMe);
 router.put("/update", authenticateToken, updateUser);
