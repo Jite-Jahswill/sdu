@@ -27,7 +27,7 @@ const { authenticateToken } = require("../middleware/authMiddleware");
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
  *             type: object
  *             required:
@@ -40,12 +40,16 @@ const { authenticateToken } = require("../middleware/authMiddleware");
  *               body:
  *                 type: string
  *                 example: "This is my first post on the school platform."
+ *               image:
+ *                 type: string
+ *                 format: binary
  *     responses:
  *       201:
  *         description: Post created successfully
  *       500:
  *         description: Server error
  */
+
 router.post("/posts", authenticateToken, createPost);
 
 /**
@@ -130,14 +134,19 @@ router.delete("/posts/:id", authenticateToken, deletePost);
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
  *             type: object
  *             properties:
  *               title:
  *                 type: string
+ *                 example: "Updated Title"
  *               body:
  *                 type: string
+ *                 example: "Updated post body"
+ *               image:
+ *                 type: string
+ *                 format: binary
  *     responses:
  *       200:
  *         description: Post updated
@@ -148,6 +157,7 @@ router.delete("/posts/:id", authenticateToken, deletePost);
  *       500:
  *         description: Server error
  */
+
 router.put("/posts/:id", authenticateToken, updatePost);
 
 module.exports = router;
