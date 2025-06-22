@@ -10,6 +10,10 @@ const Post = sequelize.define("Post", {
     type: DataTypes.TEXT,
     allowNull: false,
   },
+  image: {
+    type: DataTypes.STRING, // URL or file path
+    allowNull: true,
+  },
   userId: {
     type: DataTypes.INTEGER,
     allowNull: false,
