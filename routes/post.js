@@ -15,6 +15,7 @@ const {
   updatePost,
 } = require("../controllers/postController");
 const { authenticateToken } = require("../middleware/authMiddleware");
+const upload = require("../middleware/uploadMiddleware");
 
 /**
  * @swagger
