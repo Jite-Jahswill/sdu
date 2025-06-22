@@ -2,6 +2,7 @@ const express = require("express");
 const router = express.Router();
 const multer = require("multer");
 const upload = multer({ dest: "uploads/" });
+
 const {
   register,
   login,
@@ -9,6 +10,7 @@ const {
   updateUser,
   deleteUser,
 } = require("../controllers/authController");
+
 const { authenticateToken } = require("../middleware/authMiddleware");
 
 /**
@@ -27,7 +29,7 @@ const { authenticateToken } = require("../middleware/authMiddleware");
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
  *             type: object
  *             required:
@@ -44,6 +46,18 @@ const { authenticateToken } = require("../middleware/authMiddleware");
  *               password:
  *                 type: string
  *                 example: mySecurePassword123
+ *               matricNumber:
+ *                 type: string
+ *                 example: SE123456
+ *               state:
+ *                 type: string
+ *                 example: Delta
+ *               country:
+ *                 type: string
+ *                 example: Nigeria
+ *               profilePicture:
+ *                 type: string
+ *                 format: binary
  *     responses:
  *       201:
  *         description: User registered successfully
@@ -106,7 +120,7 @@ const { authenticateToken } = require("../middleware/authMiddleware");
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
  *             type: object
  *             properties:
@@ -119,6 +133,18 @@ const { authenticateToken } = require("../middleware/authMiddleware");
  *               password:
  *                 type: string
  *                 example: newPassword123
+ *               matricNumber:
+ *                 type: string
+ *                 example: SE234567
+ *               state:
+ *                 type: string
+ *                 example: Lagos
+ *               country:
+ *                 type: string
+ *                 example: Nigeria
+ *               profilePicture:
+ *                 type: string
+ *                 format: binary
  *     responses:
  *       200:
  *         description: User updated successfully
@@ -142,10 +168,12 @@ const { authenticateToken } = require("../middleware/authMiddleware");
  *       403:
  *         description: Unauthorized
  */
+
+// Routes
 router.post("/register", upload.single("profilePicture"), register);
 router.post("/login", login);
 router.get("/me", authenticateToken, getMe);
-router.put("/update", authenticateToken, updateUser);
+router.put("/update", authenticateToken, upload.single("profilePicture"), updateUser);
 router.delete("/delete", authenticateToken, deleteUser);
 
 module.exports = router;
