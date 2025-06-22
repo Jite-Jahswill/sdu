@@ -50,7 +50,7 @@ const { authenticateToken } = require("../middleware/authMiddleware");
  *         description: Server error
  */
 
-router.post("/posts", authenticateToken, createPost);
+router.post("/posts", authenticateToken, upload.single("image"), createPost);
 
 /**
  * @swagger
@@ -158,6 +158,6 @@ router.delete("/posts/:id", authenticateToken, deletePost);
  *         description: Server error
  */
 
-router.put("/posts/:id", authenticateToken, updatePost);
+router.put("/posts/:id", authenticateToken, upload.single("image"), updatePost);
 
 module.exports = router;
