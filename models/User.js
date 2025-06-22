@@ -15,6 +15,32 @@ const User = sequelize.define("User", {
     type: DataTypes.STRING,
     allowNull: false,
   },
+  matricNumber: {
+  type: DataTypes.STRING,
+  allowNull: false,
+  unique: true,
+},
+state: {
+  type: DataTypes.STRING,
+  allowNull: true,
+},
+country: {
+  type: DataTypes.STRING,
+  allowNull: true,
+},
+profilePicture: {
+  type: DataTypes.STRING,
+  allowNull: true, // store image URL
+},
+  resetToken: {
+  type: DataTypes.STRING,
+  allowNull: true,
+},
+resetTokenExpiry: {
+  type: DataTypes.DATE,
+  allowNull: true,
+},
+
 });
 
 module.exports = User;
