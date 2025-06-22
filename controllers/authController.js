@@ -73,11 +73,22 @@ exports.updateUser = async (req, res) => {
     const user = await User.findByPk(req.user.id);
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    const { name, email, password } = req.body;
+    const { name, email, password, matricNumber } = req.body;
 
     if (name) user.name = name;
     if (email) user.email = email;
-    if (password) user.password = password; // Hash if needed
+    if (matricNumber) user.matricNumber = matricNumber;
+
+    if (password) {
+      const salt = await bcrypt.genSalt(10);
+      user.password = await bcrypt.hash(password, salt);
+    }
+
+    // Profile Picture Upload
+    if (req.file) {
+      user.profilePicture = `/uploads/${req.file.filename}`;
+    }
+
     await user.save();
 
     res.json({ message: "User updated successfully", user });
@@ -94,6 +105,56 @@ exports.deleteUser = async (req, res) => {
 
     await user.destroy();
     res.json({ message: "User deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+exports.forgotPassword = async (req, res) => {
+  const { email } = req.body;
+
+  try {
+    const user = await User.findOne({ where: { email } });
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    const token = crypto.randomBytes(32).toString("hex");
+    const expiry = Date.now() + 1000 * 60 * 15; // 15 minutes
+
+    user.resetToken = token;
+    user.resetTokenExpiry = expiry;
+    await user.save();
+
+    // For now, just log it to the console (later use nodemailer or similar)
+    console.log(`Reset your password: http://localhost:3000/reset-password/${token}`);
+
+    res.status(200).json({ message: "Password reset link sent to email." });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+exports.resetPassword = async (req, res) => {
+  const { token, newPassword } = req.body;
+
+  try {
+    const user = await User.findOne({
+      where: {
+        resetToken: token,
+        resetTokenExpiry: { [Op.gt]: Date.now() },
+      },
+    });
+
+    if (!user) {
+      return res.status(400).json({ message: "Invalid or expired token" });
+    }
+
+    const hashedPassword = await bcrypt.hash(newPassword, 10);
+    user.password = hashedPassword;
+    user.resetToken = null;
+    user.resetTokenExpiry = null;
+    await user.save();
+
+    res.status(200).json({ message: "Password reset successfully" });
   } catch (err) {
     res.status(500).json({ error: err.message });
   }
