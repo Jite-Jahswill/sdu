@@ -46,7 +46,7 @@ const { authenticateToken } = require("../middleware/authMiddleware");
  *       500:
  *         description: Server error
  */
-router.post("/", authenticateToken, createPost);
+router.post("/posts", authenticateToken, createPost);
 
 /**
  * @swagger
@@ -60,7 +60,7 @@ router.post("/", authenticateToken, createPost);
  *       500:
  *         description: Server error
  */
-router.get("/", getAllPosts);
+router.get("/posts", getAllPosts);
 
 /**
  * @swagger
@@ -83,7 +83,7 @@ router.get("/", getAllPosts);
  *       500:
  *         description: Server error
  */
-router.get("/:id", getPostById);
+router.get("/posts/:id", getPostById);
 
 /**
  * @swagger
@@ -110,7 +110,7 @@ router.get("/:id", getPostById);
  *       500:
  *         description: Server error
  */
-router.delete("/:id", authenticateToken, deletePost);
+router.delete("/posts/:id", authenticateToken, deletePost);
 
 /**
  * @swagger
@@ -148,6 +148,6 @@ router.delete("/:id", authenticateToken, deletePost);
  *       500:
  *         description: Server error
  */
-router.put("/:id", authenticateToken, updatePost);
+router.put("/posts/:id", authenticateToken, updatePost);
 
 module.exports = router;
