@@ -184,6 +184,61 @@ const { authenticateToken } = require("../middleware/authMiddleware");
  *         description: Unauthorized
  */
 
+/**
+ * @swagger
+ * /api/auth/forgot-password:
+ *   post:
+ *     summary: Request password reset link
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - email
+ *             properties:
+ *               email:
+ *                 type: string
+ *                 example: jite@example.com
+ *     responses:
+ *       200:
+ *         description: Password reset email sent if email exists
+ *       400:
+ *         description: Bad request (invalid email)
+ */
+
+/**
+ * @swagger
+ * /api/auth/reset-password:
+ *   post:
+ *     summary: Reset password using token from email
+ *     tags: [Auth]
+ *     requestBody:
+ *       required: true
+ *       content:
+ *         application/json:
+ *           schema:
+ *             type: object
+ *             required:
+ *               - token
+ *               - newPassword
+ *             properties:
+ *               token:
+ *                 type: string
+ *                 example: resetTokenHere123456
+ *               newPassword:
+ *                 type: string
+ *                 example: myNewSecurePassword123
+ *     responses:
+ *       200:
+ *         description: Password has been reset successfully
+ *       400:
+ *         description: Invalid or expired token, or bad request
+ */
+
+
 
 // Routes
 router.post("/register", upload.single("profilePicture"), register);
