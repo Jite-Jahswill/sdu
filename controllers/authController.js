@@ -51,7 +51,7 @@ exports.getMe = async (req, res) => {
 };
 
 // Update user info
-const updateUser = async (req, res) => {
+exports.updateUser = async (req, res) => {
   try {
     const user = await User.findByPk(req.user.id);
     if (!user) return res.status(404).json({ message: "User not found" });
@@ -70,7 +70,7 @@ const updateUser = async (req, res) => {
 };
 
 // Delete user
-const deleteUser = async (req, res) => {
+exports.deleteUser = async (req, res) => {
   try {
     const user = await User.findByPk(req.user.id);
     if (!user) return res.status(404).json({ message: "User not found" });
@@ -81,6 +81,3 @@ const deleteUser = async (req, res) => {
     res.status(500).json({ error: err.message });
   }
 };
-
-module.exports = { updateUser, deleteUser };
-
