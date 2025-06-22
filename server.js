@@ -11,7 +11,7 @@ const path = require("path");
 dotenv.config();
 
 const app = express();
-app.use(cors({ origin: "http://localhost:5000", credentials: true }));
+app.use(cors({ origin: "*", credentials: true }));
 app.use(cookieParser());
 app.use(express.json());
 
