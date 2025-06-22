@@ -1,23 +1,29 @@
-// swagger.js
-const swaggerJSDoc = require("swagger-jsdoc");
+const swaggerJsdoc = require("swagger-jsdoc");
 
 const options = {
   definition: {
     openapi: "3.0.0",
     info: {
-      title: "Smart Campus Assistant API",
+      title: "On-Campus Social Media API",
       version: "1.0.0",
-      description: "API documentation for your campus assistant app",
     },
-    servers: [
+    components: {
+      securitySchemes: {
+        bearerAuth: {
+          type: "http",
+          scheme: "bearer",
+          bearerFormat: "JWT",
+        },
+      },
+    },
+    security: [
       {
-        url: "http://localhost:3000", // matches the dev URL
+        bearerAuth: [],
       },
     ],
   },
-  apis: ["./routes/*.js"], // Scan for Swagger comments in your routes
+  apis: ["./routes/*.js"],
 };
 
-const swaggerSpec = swaggerJSDoc(options);
-
+const swaggerSpec = swaggerJsdoc(options);
 module.exports = swaggerSpec;
