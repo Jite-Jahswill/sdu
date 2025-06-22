@@ -4,7 +4,7 @@ const User = require("../models/User");
 
 exports.register = async (req, res) => {
   try {
-    const { firstname, lastname, username, email, password, matricNumber, state, country } = req.body;
+    const { firstname, lastname, username, email, password, matricNumber, state, country, gender } = req.body;
 
     // Handle profile picture upload
     let profilePicture = null;
@@ -33,6 +33,7 @@ exports.register = async (req, res) => {
       matricNumber,
       state,
       country,
+      gender,
       profilePicture,
     });
 
@@ -81,7 +82,7 @@ exports.updateUser = async (req, res) => {
     const user = await User.findByPk(req.user.id);
     if (!user) return res.status(404).json({ message: "User not found" });
 
-    const { firstname, lastname, username, email, password, matricNumber, state, country } = req.body;
+    const { firstname, lastname, username, email, password, matricNumber, state, country, gender } = req.body;
 
     if (firstname) user.firstname = firstname;
     if (lastname) user.lastname = lastname;
@@ -89,6 +90,7 @@ exports.updateUser = async (req, res) => {
     if (email) user.email = email;
     if (matricNumber) user.matricNumber = matricNumber;
     if (state) user.state = state;
+    if (gender) user.gender = gender;
     if (country) user.country = country;
 
     if (password) {
