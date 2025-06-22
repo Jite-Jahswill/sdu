@@ -3,17 +3,34 @@ const jwt = require("jsonwebtoken");
 const User = require("../models/User");
 
 exports.register = async (req, res) => {
-  const { username, email, password } = req.body;
   try {
-    const hashedPassword = await bcrypt.hash(password, 10);
-    const user = await User.create({
-      username,
+    const { name, email, password, matricNumber, state, country } = req.body;
+
+    // Handle profile picture upload
+    let profilePicture = null;
+    if (req.file) {
+      profilePicture = `${req.protocol}://${req.get("host")}/uploads/${req.file.filename}`;
+    }
+
+    // Check if user already exists
+    const existing = await User.findOne({ where: { email } });
+    if (existing) return res.status(400).json({ message: "Email already in use" });
+
+    const hashed = await bcrypt.hash(password, 10);
+
+    const newUser = await User.create({
+      name,
       email,
-      password: hashedPassword,
+      password: hashed,
+      matricNumber,
+      state,
+      country,
+      profilePicture,
     });
-    res.status(201).json({ message: "User registered successfully", user });
+
+    res.status(201).json({ message: "Registered successfully", user: newUser });
   } catch (err) {
-    res.status(500).json({ error: "Registration failed", details: err });
+    res.status(500).json({ error: err.message });
   }
 };
 
