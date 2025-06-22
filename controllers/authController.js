@@ -49,3 +49,38 @@ exports.getMe = async (req, res) => {
     res.status(500).json({ error: "Failed to get user" });
   }
 };
+
+// Update user info
+const updateUser = async (req, res) => {
+  try {
+    const user = await User.findByPk(req.user.id);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    const { name, email, password } = req.body;
+
+    if (name) user.name = name;
+    if (email) user.email = email;
+    if (password) user.password = password; // Hash if needed
+    await user.save();
+
+    res.json({ message: "User updated successfully", user });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+// Delete user
+const deleteUser = async (req, res) => {
+  try {
+    const user = await User.findByPk(req.user.id);
+    if (!user) return res.status(404).json({ message: "User not found" });
+
+    await user.destroy();
+    res.json({ message: "User deleted successfully" });
+  } catch (err) {
+    res.status(500).json({ error: err.message });
+  }
+};
+
+module.exports = { register, login, getMe, updateUser, deleteUser };
+
