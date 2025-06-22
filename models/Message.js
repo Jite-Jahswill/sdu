@@ -11,10 +11,12 @@ const Message = sequelize.define(
     receiverId: {
       type: DataTypes.INTEGER,
       allowNull: true, // nullable for group messages
+      defaultValue: null,
     },
     groupId: {
       type: DataTypes.INTEGER,
       allowNull: true,
+      defaultValue: null,
     },
     content: {
       type: DataTypes.TEXT,
@@ -33,22 +35,23 @@ const Message = sequelize.define(
       allowNull: true,
     },
     pollOptions: {
-      type: DataTypes.ARRAY(DataTypes.STRING), // PostgreSQL only; for others, use JSON
+      type: DataTypes.JSON, // works on MySQL too
       allowNull: true,
     },
     votes: {
-      type: DataTypes.JSONB, // JSON object of option: [userIds]
+      type: DataTypes.JSON,
+      allowNull: true,
+      defaultValue: {},
+    },
+    reactions: {
+      type: DataTypes.JSON,
       allowNull: true,
       defaultValue: {},
     },
     replyToMessageId: {
       type: DataTypes.INTEGER,
       allowNull: true,
-    },
-    reactions: {
-      type: DataTypes.JSONB, // JSON object like { "👍": [userId1, userId2], "❤️": [userId3] }
-      allowNull: true,
-      defaultValue: {},
+      defaultValue: null,
     },
   },
   {
