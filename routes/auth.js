@@ -64,6 +64,9 @@ const { authenticateToken } = require("../middleware/authMiddleware");
  *               country:
  *                 type: string
  *                 example: Nigeria
+ *                gender:
+ *                 type: string
+ *                 example: Male
  *               profilePicture:
  *                 type: string
  *                 format: binary
@@ -157,6 +160,9 @@ const { authenticateToken } = require("../middleware/authMiddleware");
  *               country:
  *                 type: string
  *                 example: Nigeria
+ *                gender:
+ *                 type: string
+ *                 example: Male
  *               profilePicture:
  *                 type: string
  *                 format: binary
