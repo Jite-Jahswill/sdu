@@ -37,6 +37,10 @@ const User = sequelize.define("User", {
     type: DataTypes.STRING,
     allowNull: true,
   },
+  gender: {
+  type: DataTypes.STRING,
+  allowNull: true,
+  },
   profilePicture: {
     type: DataTypes.STRING,
     allowNull: true, // store image URL
