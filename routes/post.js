@@ -51,7 +51,7 @@ const upload = require("../middleware/uploadMiddleware");
  *         description: Server error
  */
 
-router.post("/posts", authenticateToken, upload.single("image"), createPost);
+router.post("/", authenticateToken, upload.single("image"), createPost);
 
 /**
  * @swagger
@@ -65,7 +65,7 @@ router.post("/posts", authenticateToken, upload.single("image"), createPost);
  *       500:
  *         description: Server error
  */
-router.get("/posts", getAllPosts);
+router.get("/", getAllPosts);
 
 /**
  * @swagger
@@ -115,7 +115,7 @@ router.get("/posts/:id", getPostById);
  *       500:
  *         description: Server error
  */
-router.delete("/posts/:id", authenticateToken, deletePost);
+router.delete("/:id", authenticateToken, deletePost);
 
 /**
  * @swagger
@@ -159,6 +159,6 @@ router.delete("/posts/:id", authenticateToken, deletePost);
  *         description: Server error
  */
 
-router.put("/posts/:id", authenticateToken, upload.single("image"), updatePost);
+router.put("/:id", authenticateToken, upload.single("image"), updatePost);
 
 module.exports = router;
