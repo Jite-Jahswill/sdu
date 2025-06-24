@@ -72,7 +72,7 @@ const { authenticateToken } = require("../middleware/authMiddleware");
  *                 format: binary
  *     responses:
  *       201:
- *         description: User registered successfully
+ *         description: User registered
  *       400:
  *         description: Bad request
  */ 
