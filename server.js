@@ -25,7 +25,7 @@ app.use("/api/chats", chatRoutes);
 
 const PORT = process.env.PORT || 3000;
 
-sequelize.sync({ alter: true }).then(() => {
+sequelize.sync({ force: true }).then(() => {
   console.log("Database connected");
   app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 });
