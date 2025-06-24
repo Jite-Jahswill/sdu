@@ -160,7 +160,7 @@ const { authenticateToken } = require("../middleware/authMiddleware");
  *               country:
  *                 type: string
  *                 example: Nigeria
- *               gender:                     # ← aligned with others
+ *               gender:
  *                 type: string
  *                 example: Male
  *               profilePicture:
@@ -243,8 +243,6 @@ const { authenticateToken } = require("../middleware/authMiddleware");
  *       400:
  *         description: Invalid or expired token, or bad request
  */
-
-
 
 // Routes
 router.post("/register", upload.single("profilePicture"), register);
