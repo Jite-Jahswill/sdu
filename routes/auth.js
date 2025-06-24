@@ -58,15 +58,15 @@ const { authenticateToken } = require("../middleware/authMiddleware");
  *               matricNumber:
  *                 type: string
  *                 example: SE123456
+ *               gender:
+ *                 type: string
+ *                 example: Male
  *               state:
  *                 type: string
  *                 example: Delta
  *               country:
  *                 type: string
  *                 example: Nigeria
- *                gender:
- *                 type: string
- *                 example: Male
  *               profilePicture:
  *                 type: string
  *                 format: binary
@@ -74,8 +74,8 @@ const { authenticateToken } = require("../middleware/authMiddleware");
  *       201:
  *         description: User registered successfully
  *       400:
- *         description: Bad request (e.g., email or username already exists)
- */
+ *         description: Bad request
+ */ 
 
 /**
  * @swagger
