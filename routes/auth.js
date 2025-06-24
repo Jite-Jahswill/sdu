@@ -160,7 +160,7 @@ const { authenticateToken } = require("../middleware/authMiddleware");
  *               country:
  *                 type: string
  *                 example: Nigeria
- *                gender:
+ *               gender:                     # ← aligned with others
  *                 type: string
  *                 example: Male
  *               profilePicture:
