@@ -1,6 +1,5 @@
 const express = require("express");
 const dotenv = require("dotenv");
-const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const swaggerUi = require("swagger-ui-express");
 const swaggerSpec = require("./swagger");
@@ -13,11 +12,9 @@ const path = require("path");
 dotenv.config();
 
 const app = express();
-app.use(cors({
-  origin: '*', // allow any origin
-  methods: ['GET', 'POST', 'PUT', 'DELETE'],
-  allowedHeaders: ['Content-Type', 'Authorization']
-}));
+
+// No CORS middleware at all
+
 app.use(cookieParser());
 app.use(express.json());
 
@@ -29,7 +26,7 @@ app.use("/api/chats", chatRoutes);
 
 const PORT = process.env.PORT || 3000;
 
-sequelize.sync({ force: true }).then(() => {
+sequelize.sync().then(() => {
   console.log("Database connected");
   app.listen(PORT, () => console.log(`Server running on port ${PORT}`));
 });
