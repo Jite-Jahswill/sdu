@@ -13,7 +13,11 @@ const path = require("path");
 dotenv.config();
 
 const app = express();
-app.use(cors({ origin: "*", credentials: true }));
+app.use(cors({
+  origin: '*', // allow any origin
+  methods: ['GET', 'POST', 'PUT', 'DELETE'],
+  allowedHeaders: ['Content-Type', 'Authorization']
+}));
 app.use(cookieParser());
 app.use(express.json());
 
